@@ -1,6 +1,7 @@
-
 add_library(hexdump_lib
-    src/hexdump.c
+    src/hexconv.c
+    src/hexconv.h
+    include/hexdump.h
 )
 
 target_include_directories(hexdump_lib
