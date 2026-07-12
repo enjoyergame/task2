@@ -1,3 +1,10 @@
+/*
+hexconv.h
+
+Кучуков Ридаль Радикович
+МК-101
+*/
+
 #ifndef HEXCONV_H
 #define HEXCONV_H
 

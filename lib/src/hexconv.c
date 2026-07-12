@@ -1,3 +1,10 @@
+/*
+hexconv.c
+
+Кучуков Ридаль Радикович
+МК-101
+*/
+
 #include "hexconv.h"
 #include <ctype.h>
 
