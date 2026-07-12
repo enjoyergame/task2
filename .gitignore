@@ -58,3 +58,4 @@ dkms.conf
 .qodo/
 .vscode/
 build/
+build_shared/
