@@ -96,5 +96,6 @@ int main(void)
     RUN_TEST(test_render_spec_example_second_line);
     RUN_TEST(test_render_custom_plain_text);
     RUN_TEST(test_render_custom_index_and_offset);
+    RUN_TEST(test_render_custom_chunk_formatting);
     return UNITY_END();
 }

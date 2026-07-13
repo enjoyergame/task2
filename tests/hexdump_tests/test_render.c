@@ -201,3 +201,28 @@ void test_render_custom_index_and_offset(void)
     free(out);
     fclose(tmp);
 }
+
+void test_render_custom_chunk_formatting(void)
+{
+    Chunk chunks[2];
+    chunks[0].bytes[0] = 0x41; chunks[0].valid_bytes = 1; // 'A'
+    chunks[1].bytes[0] = 0x42; chunks[1].valid_bytes = 1; // 'B'
+    Line line = { .line_index = 0, .offset = 0, .chunks = chunks, .n_chunks = 2 };
+
+    HexDumpConfig cfg = {
+        .chunk_size = 1, .chunk_count = 2,
+        .format = "Chunk0: %0x (%0c), Chunk1: %1x (%1c)"
+    };
+
+    FILE *tmp = tmpfile();
+    TEST_ASSERT_NOT_NULL(tmp);
+
+    int r = render_custom_line(tmp, &line, &cfg);
+    TEST_ASSERT_EQUAL_INT(0, r);
+
+    char *out = read_all_from_tmpfile(tmp, NULL);
+    TEST_ASSERT_EQUAL_STRING("Chunk0: 41 (A), Chunk1: 42 (B)", out);
+
+    free(out);
+    fclose(tmp);
+}
