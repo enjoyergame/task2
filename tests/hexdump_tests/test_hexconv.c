@@ -99,5 +99,9 @@ int main(void)
     RUN_TEST(test_reader_offset_and_size_and_group_example);
     RUN_TEST(test_reader_chunk_count_splits_lines);
     RUN_TEST(test_reader_invalid_offset);
+    RUN_TEST(test_render_full_line_no_padding);
+    RUN_TEST(test_render_short_line_padding);
+    RUN_TEST(test_render_multi_byte_chunk_no_char_section);
+    RUN_TEST(test_render_spec_example_second_line);
     return UNITY_END();
 }

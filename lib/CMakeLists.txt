@@ -3,6 +3,8 @@ add_library(hexdump_lib
     src/hexconv.h
     src/reader.c
     src/reader.h
+    src/render.c
+    src/render.h
     include/hexdump.h
 )
 
