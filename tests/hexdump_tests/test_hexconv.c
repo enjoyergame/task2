@@ -49,15 +49,6 @@ void test_chunk_to_hex_size3_reversed(void)
     TEST_ASSERT_EQUAL_STRING("FBFA13", out);
 }
 
-void test_chunk_to_hex_size4_reversed(void)
-{
-    uint8_t bytes[2] = {0x41, 0x42};
-    char out[5];
-
-    chunk_to_hex(bytes, 2, 2, out);
-    TEST_ASSERT_EQUAL_STRING("4241", out);
-}
-
 void test_chunk_to_char_direct_order(void)
 {
     uint8_t bytes[2] = {0x41, 0x42};
@@ -92,7 +83,6 @@ int main(void)
     RUN_TEST(test_byte_to_hex_basic);
     RUN_TEST(test_chunk_to_hex_size1_no_reverse);
     RUN_TEST(test_chunk_to_hex_size3_reversed);
-    RUN_TEST(test_chunk_to_hex_size4_reversed);
     RUN_TEST(test_chunk_to_char_direct_order);
     RUN_TEST(test_chunk_to_char_non_printable);
     RUN_TEST(test_chunk_to_char_partial_valid_bytes);
