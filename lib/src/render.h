@@ -13,6 +13,7 @@
 #include "hexdump.h"
 #include "reader.h"
 
+int render_custom_line(FILE *out, const Line *line, const HexDumpConfig *cfg);
 int render_default_line(FILE *out, const Line *line, const HexDumpConfig *cfg);
 
 #endif // RENDER_H
