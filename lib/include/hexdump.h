@@ -10,6 +10,10 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 typedef struct {
     const char *file_name;
@@ -22,5 +26,7 @@ typedef struct {
 } HexDumpConfig;
 
 int hexdump_process(const HexDumpConfig *cfg, FILE *out);
+
+int hexdump_process_dir(const HexDumpConfig *cfg, FILE *out);
 
 #endif // HEXDUMP_H
