@@ -25,7 +25,6 @@ static char *read_all_from_tmpfile(FILE *f, size_t *out_len)
 
 void test_render_full_line_no_padding(void)
 {
-    // 8 печатаемых байт 'A'..'H', chunk_size=1, chunk_count=8, без паддинга
     Chunk chunks[8];
     const uint8_t letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
     for (int i = 0; i < 8; i++)
@@ -61,9 +60,8 @@ void test_render_full_line_no_padding(void)
 
 void test_render_short_line_padding(void)
 {
-    // chunk_count=2, но реально есть только 1 чанк -> нужен паддинг
     Chunk chunks[2];
-    chunks[0].bytes[0] = 0x41; // 'A'
+    chunks[0].bytes[0] = 0x41;
     chunks[0].valid_bytes = 1;
     Line line = { .line_index = 0, .offset = 0, .chunks = chunks, .n_chunks = 1 };
 
@@ -82,7 +80,6 @@ void test_render_short_line_padding(void)
 
     char *out = read_all_from_tmpfile(tmp, NULL);
 
-    // "41" + 3 паддинг-символа (пробел + 2 пробела вместо hex) + " | " + "A" + "\n"
     const char *expected = "00000000  " "41" "   " " | " "A" "\n";
 
     TEST_ASSERT_EQUAL_STRING(expected, out);
@@ -93,7 +90,6 @@ void test_render_short_line_padding(void)
 
 void test_render_multi_byte_chunk_no_char_section(void)
 {
-    // chunk_size=2 -> символьная секция вообще не выводится
     Chunk chunks[2];
     chunks[0].bytes[0] = 0x41; chunks[0].bytes[1] = 0x42; chunks[0].valid_bytes = 2;
     chunks[1].bytes[0] = 0x43; chunks[1].bytes[1] = 0x44; chunks[1].valid_bytes = 2;
@@ -114,7 +110,6 @@ void test_render_multi_byte_chunk_no_char_section(void)
 
     char *out = read_all_from_tmpfile(tmp, NULL);
 
-    // байты реверсируются внутри чанка: {41,42}->"4241", {43,44}->"4443"
     const char *expected = "00000000  " "4241 4443" "\n";
 
     TEST_ASSERT_EQUAL_STRING(expected, out);
@@ -125,8 +120,6 @@ void test_render_multi_byte_chunk_no_char_section(void)
 
 void test_render_spec_example_second_line(void)
 {
-    // воспроизводим вторую строку первого примера из задания:
-    // 00000010  33 34 <паддинг до 16 чанков> | 34
     Chunk chunks[16];
     chunks[0].bytes[0] = 0x33; chunks[0].valid_bytes = 1;
     chunks[1].bytes[0] = 0x34; chunks[1].valid_bytes = 1;
@@ -146,8 +139,6 @@ void test_render_spec_example_second_line(void)
     TEST_ASSERT_EQUAL_INT(0, r);
 
     char *out = read_all_from_tmpfile(tmp, NULL);
-
-    // 14 отсутствующих чанков * 3 символа паддинга каждый (пробел + 2 hex-места) = 42 пробела
     char padding[43];
     memset(padding, ' ', 42);
     padding[42] = '\0';
@@ -169,7 +160,7 @@ void test_render_custom_plain_text(void)
 
     HexDumpConfig cfg = {
         .chunk_size = 1, .chunk_count = 1,
-        .format = "Hello World" // Просто обычный текст
+        .format = "Hello World"
     };
 
     FILE *tmp = tmpfile();
@@ -180,6 +171,32 @@ void test_render_custom_plain_text(void)
 
     char *out = read_all_from_tmpfile(tmp, NULL);
     TEST_ASSERT_EQUAL_STRING("Hello World", out);
+
+    free(out);
+    fclose(tmp);
+}
+
+void test_render_custom_index_and_offset(void)
+{
+    Chunk chunks[1];
+    chunks[0].bytes[0] = 0xAA;
+    chunks[0].valid_bytes = 1;
+    Line line = { .line_index = 4, .offset = 64, .chunks = chunks, .n_chunks = 1 };
+
+    HexDumpConfig cfg = {
+        .chunk_size = 1, .chunk_count = 1,
+        .format = "Строка %i имеет смещение %n"
+    };
+
+    FILE *tmp = tmpfile();
+    TEST_ASSERT_NOT_NULL(tmp);
+
+    int r = render_custom_line(tmp, &line, &cfg);
+    TEST_ASSERT_EQUAL_INT(0, r);
+
+    char *out = read_all_from_tmpfile(tmp, NULL);
+    
+    TEST_ASSERT_EQUAL_STRING("Строка 4 имеет смещение 00000040", out);
 
     free(out);
     fclose(tmp);
