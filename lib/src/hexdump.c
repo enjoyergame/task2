@@ -19,7 +19,7 @@ int hexdump_process(const HexDumpConfig *cfg, FILE *out)
     FILE *in = fopen(cfg->file_name, "rb");
     if (in == NULL)
     {
-        fprintf(stderr, "Ошибка открытия файла: %s\n", cfg->file_name);
+        fprintf(stderr, "Error opening file: %s\n", cfg->file_name);
         return -1;
     }
 
@@ -67,7 +67,7 @@ int hexdump_process_dir(const HexDumpConfig *cfg, FILE *out)
     DIR *dir = opendir(cfg->dir_name);
     if (dir == NULL)
     {
-        fprintf(stderr, "Ошибка открытия директории: %s\n", cfg->dir_name);
+        fprintf(stderr, "Error opening directory: %s\n", cfg->dir_name);
         return -1;
     }
 
