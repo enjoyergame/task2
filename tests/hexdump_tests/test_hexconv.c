@@ -8,6 +8,7 @@ tests
 #include "unity.h"
 #include "hexconv.h"
 #include "test_reader.h"
+#include "test_render.h"
 #include <string.h>
 
 void setUp(void) {}
