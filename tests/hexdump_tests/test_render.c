@@ -226,3 +226,32 @@ void test_render_custom_chunk_formatting(void)
     free(out);
     fclose(tmp);
 }
+
+void test_render_custom_escape_sequences(void)
+{
+    Chunk chunks[1];
+    chunks[0].bytes[0] = 0x11;
+    chunks[0].valid_bytes = 1;
+    Line line = { .line_index = 0, .offset = 0, .chunks = chunks, .n_chunks = 1 };
+
+    // В коде Си мы удваиваем обратные слэши, чтобы в саму строку 
+    // записались символы '\n', '\t' и '\\', которые будет парсить наша функция
+    HexDumpConfig cfg = {
+        .chunk_size = 1, .chunk_count = 1,
+        .format = "A\\nB\\tC\\\\D"
+    };
+
+    FILE *tmp = tmpfile();
+    TEST_ASSERT_NOT_NULL(tmp);
+
+    int r = render_custom_line(tmp, &line, &cfg);
+    TEST_ASSERT_EQUAL_INT(0, r);
+
+    char *out = read_all_from_tmpfile(tmp, NULL);
+    
+    // Ожидаем в результате реальный перенос, таб и один обратный слэш
+    TEST_ASSERT_EQUAL_STRING("A\nB\tC\\D", out);
+
+    free(out);
+    fclose(tmp);
+}
