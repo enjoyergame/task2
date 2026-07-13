@@ -15,6 +15,10 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 typedef struct {
     const char *file_name;
     const char *dir_name;
