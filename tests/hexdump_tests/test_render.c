@@ -160,3 +160,27 @@ void test_render_spec_example_second_line(void)
     free(out);
     fclose(tmp);
 }
+void test_render_custom_plain_text(void)
+{
+    Chunk chunks[1];
+    chunks[0].bytes[0] = 0x11;
+    chunks[0].valid_bytes = 1;
+    Line line = { .line_index = 0, .offset = 0, .chunks = chunks, .n_chunks = 1 };
+
+    HexDumpConfig cfg = {
+        .chunk_size = 1, .chunk_count = 1,
+        .format = "Hello World" // Просто обычный текст
+    };
+
+    FILE *tmp = tmpfile();
+    TEST_ASSERT_NOT_NULL(tmp);
+
+    int r = render_custom_line(tmp, &line, &cfg);
+    TEST_ASSERT_EQUAL_INT(0, r);
+
+    char *out = read_all_from_tmpfile(tmp, NULL);
+    TEST_ASSERT_EQUAL_STRING("Hello World", out);
+
+    free(out);
+    fclose(tmp);
+}

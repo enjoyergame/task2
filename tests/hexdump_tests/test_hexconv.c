@@ -104,5 +104,6 @@ int main(void)
     RUN_TEST(test_render_short_line_padding);
     RUN_TEST(test_render_multi_byte_chunk_no_char_section);
     RUN_TEST(test_render_spec_example_second_line);
+    RUN_TEST(test_render_custom_plain_text);
     return UNITY_END();
 }
