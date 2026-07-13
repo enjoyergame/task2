@@ -19,11 +19,11 @@ int reader_init(ReaderState *state, FILE *in, const HexDumpConfig *cfg)
         return -1;
     }
 
-    if (fseek(in, 0, SEEK_END) != 0)
+    if (fseek(in, 0, SEEK_END) != 0) // прыгаем в конец
     {
         return -1;
     }
-    long file_size = ftell(in);
+    long file_size = ftell(in); // получаем размер файла фтел ретернит текущая позиция курсора в байтах от начала файла
     if (file_size < 0)
     {
         return -1;
@@ -34,15 +34,15 @@ int reader_init(ReaderState *state, FILE *in, const HexDumpConfig *cfg)
         return -1;
     }
 
-    if (fseek(in, cfg->offset, SEEK_SET) != 0)
+    if (fseek(in, cfg->offset, SEEK_SET) != 0) // сдвигаемся на фосет
     {
         return -1;
     }
 
-    long remaining_in_file = file_size - cfg->offset;
-    long bytes_left = (cfg->size < 0) ? remaining_in_file
-                                       : (cfg->size < remaining_in_file ? cfg->size : remaining_in_file);
-
+    long remaining_in_file = file_size - cfg->offset;                                                    // остаток в файле
+    long bytes_left = (cfg->size < 0) ? remaining_in_file                                                // если не задан то все оставшее выводить
+                                      : (cfg->size < remaining_in_file ? cfg->size : remaining_in_file); // либо все оставшееся либо что ввел пользователь
+    // инициализация структурки
     state->in = in;
     state->cfg = cfg;
     state->bytes_left = bytes_left;

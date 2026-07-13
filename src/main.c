@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Делегируем работу библиотеке
     if (cfg.dir_name != NULL)
     {
         if (hexdump_process_dir(&cfg, stdout) != 0)

@@ -20,13 +20,13 @@
 #endif
 
 typedef struct {
-    const char *file_name;
-    const char *dir_name;
-    long        offset;
-    long        size;
-    int         chunk_size;
-    int         chunk_count;
-    const char *format;
+    const char *file_name; //-i путь к файлу
+    const char *dir_name; // -d путь к директории
+    long        offset; // -o смещение 
+    long        size; // -l сколько байт вывести
+    int         chunk_size; // -g размер одного кусочка
+    int         chunk_count; // -n сколько кусочков выводить в одной строке
+    const char *format; // -f пользовательский формат
 } HexDumpConfig;
 
 int hexdump_process(const HexDumpConfig *cfg, FILE *out);

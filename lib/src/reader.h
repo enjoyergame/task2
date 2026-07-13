@@ -10,26 +10,29 @@
 #include <stdio.h>
 #include "hexdump.h"
 
-#define READER_MAX_CHUNK_SIZE 16
+#define READER_MAX_CHUNK_SIZE 16 // чтоб все влезло
 
-typedef struct {
-    uint8_t bytes[READER_MAX_CHUNK_SIZE];
-    int     valid_bytes;
+typedef struct
+{
+    uint8_t bytes[READER_MAX_CHUNK_SIZE]; // все данные
+    int valid_bytes;                      // реальные данные
 } Chunk;
 
-typedef struct {
-    long   line_index;
-    long   offset;
-    Chunk *chunks;
-    int    n_chunks;
+typedef struct
+{
+    long line_index; // номер строки
+    long offset;     // смещение
+    Chunk *chunks;   // массив кусочков
+    int n_chunks; // количество успешно прочитанных кусочков 
 } Line;
 
-typedef struct {
+typedef struct
+{
     FILE *in;
     const HexDumpConfig *cfg;
-    long  bytes_left;
-    long  current_offset;
-    long  line_idx;
+    long bytes_left;     // сколько байт еще осталось прочитать
+    long current_offset; // текущая смещение в файле
+    long line_idx;       // счетчик строк
 } ReaderState;
 
 int reader_init(ReaderState *state, FILE *in, const HexDumpConfig *cfg);
