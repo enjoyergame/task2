@@ -7,6 +7,7 @@ tests
 
 #include "unity.h"
 #include "hexconv.h"
+#include "test_reader.h"
 #include <string.h>
 
 void setUp(void) {}
@@ -94,6 +95,9 @@ int main(void)
     RUN_TEST(test_chunk_to_char_direct_order);
     RUN_TEST(test_chunk_to_char_non_printable);
     RUN_TEST(test_chunk_to_char_partial_valid_bytes);
-
+    RUN_TEST(test_reader_basic_full_file);
+    RUN_TEST(test_reader_offset_and_size_and_group_example);
+    RUN_TEST(test_reader_chunk_count_splits_lines);
+    RUN_TEST(test_reader_invalid_offset);
     return UNITY_END();
 }
