@@ -113,7 +113,7 @@ int render_custom_line(FILE *out, const Line *line, const HexDumpConfig *cfg)
                     if (type == 'x')
                     {
                         char hex[READER_MAX_CHUNK_SIZE * 2 + 1];
-                        chunk_to_hex(target_chunk->bytes, cfg->chunk_size, target_chunk->valid_bytes, hex);
+                        chunk_to_hex(target_chunk->bytes, cfg->chunk_size, target_chunk->valid_bytes, hex);//hexconv.c
                         fputs(hex, out);
                     }
                     else if (type == 'c')

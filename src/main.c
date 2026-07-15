@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
     if (cfg.dir_name != NULL)
     {
-        if (hexdump_process_dir(&cfg, stdout) != 0)
+        if (hexdump_process_dir(&cfg, stdout) != 0)//lib/src/hexdump.c
         {
             return 1;
         }

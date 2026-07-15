@@ -105,7 +105,7 @@ int hexdump_process_dir(const HexDumpConfig *cfg, FILE *out)
     }
 
     int file_printed = 0; // флажок для -i и -d одновременно
-    struct dirent *entry; // указатель на структуру с инфой о папке
+    struct dirent *entry; // указатель на структуру с инфой о папке из дирент.h
 
     while ((entry = readdir(dir)) != NULL) // readdir(dir) - отдает имя файла и перемещается к следующему
     {
@@ -123,7 +123,7 @@ int hexdump_process_dir(const HexDumpConfig *cfg, FILE *out)
             fprintf(out, "\n== %s ==\n", path);                               // разделить
             if (cfg->file_name != NULL && is_same_file(cfg->file_name, path)) // проверка что файл не равен тому что в -i передается
             {
-                file_printed = 1; // флажок
+                file_printed = 1; // флажок что файл из -и уже выведен
             }
 
             HexDumpConfig file_cfg = *cfg;   // копия конфига
