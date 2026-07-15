@@ -27,7 +27,6 @@ test_render_custom_chunk_formatting:
 Проверяет вывод данных в HEX (%x) и символьном (%c) виде внутри кастомного формата.
 test_render_custom_escape_sequences:
 Проверяет правильность обработки комбинаций спецсимволов (перенос, табуляция, слэш).
-
 */
 
 #include "unity.h"
