@@ -5,6 +5,20 @@ tests
 МК-101
 */
 
+/*test_byte_to_hex_basic: 
+Проверяет, что одиночный байт правильно переводится в HEX-строку (граничные значения: 0x00, 0xFF, и случайное 0xAB).
+test_chunk_to_hex_size1_no_reverse:
+Проверяет, что байт размером 1 не требует "переворота" и выводится корректно.
+test_chunk_to_hex_size3_reversed:
+Проверяет логику Little Endian (реверс байт): 0x13 0xFA 0xFB должно превратиться в FBFA13.
+test_chunk_to_char_direct_order:
+Проверяет, что при выводе символов порядок байтов не меняется (как было AB, так и осталось).
+test_chunk_to_char_non_printable:
+Проверяет замену непечатных символов (например, 0x00, 0xFA) на точку . (игнорирует их).
+test_chunk_to_char_partial_valid_bytes:
+Проверяет, что если файл кончился и мы получили "неполный" кусок, функция корректно обрабатывает только валидные байты.
+*/
+
 #include "unity.h"
 #include "hexconv.h"
 #include "test_reader.h"

@@ -9,6 +9,7 @@ main.c
 #include <stdlib.h>
 #include <unistd.h>
 #include "hexdump.h"
+#include <bits/getopt_core.h>
 
 static void print_usage(const char *prog_name)
 {
